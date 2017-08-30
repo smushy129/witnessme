@@ -31,12 +31,28 @@ const Ul = styled.ul`
   }
 `
 
+const categories = ['tech', 'art', 'gamer', 'guitar', 'make up', 'food']
+
 class Slider extends React.Component {
+  static shuffle(array) {
+    let counter = array.length
+
+    while (counter > 0) {
+      const index = Math.floor(Math.random() * counter)
+      counter -= 1
+      const temp = array[counter]
+      array[counter] = array[index]
+      array[index] = temp
+    }
+
+    return array
+  }
+
   constructor(props) {
     super(props)
 
     this.state = {
-      youtubeList: null,
+      youtubeList: [],
     }
     this.children = props.children
     this.onYouTubeApiLoad = this.onYouTubeApiLoad.bind(this)
@@ -51,27 +67,33 @@ class Slider extends React.Component {
   }
 
   onYouTubeApiLoad() {
-    window.gapi.client.setApiKey('AIzaSyCR5In4DZaTP6IEZQ0r1JceuvluJRzQNLE')
+    window.gapi.client.setApiKey('AIzaSyCYNzEeEAbgeKH3nt7ZeHVMBn9Ej-gl4Ko')
     this.search()
   }
 
   onSearchResponse(response) {
-    this.setState({ youtubeList: response.items })
-    console.log(response.items)
+    const shuffled = Slider.shuffle(response.items).slice(0, 2)
+    const newState = [].concat(this.state.youtubeList).concat(shuffled)
+    this.setState({ youtubeList: newState })
   }
 
   search() {
-    const request = window.gapi.client.youtube.search.list({
-      part: 'snippet',
-      type: 'channel',
-      maxResults: 6,
-      q: 'tech',
-    })
-    request.execute(this.onSearchResponse)
+    let i = 0
+    while (i < 6) {
+      const category = categories[i]
+      const request = window.gapi.client.youtube.search.list({
+        part: 'snippet',
+        type: 'channel',
+        maxResults: 10,
+        q: category,
+      })
+      request.execute(this.onSearchResponse)
+      i += 2
+    }
   }
 
   render() {
-    if (!this.state.youtubeList) return null
+    if (!this.state.youtubeList.length) return null
     const featuredList = this.state.youtubeList.map((item) => {
       return <li key={item.id.channelId}><SliderCard data={item} /></li>
     })
