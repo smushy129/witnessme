@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const Data = styled.span`
   line-height: 1.3em;
@@ -26,9 +27,29 @@ const Card = styled.section`
   justify-content: center;
 `
 
-class SliderCard extends React.Component {
+class YTListItem extends React.Component {
   static addCommas(num) {
     return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  }
+
+  static getSubCount(response) {
+    return YTListItem.addCommas(response.items[0].statistics.subscriberCount)
+  }
+
+  static getViewCount(response) {
+    return YTListItem.addCommas(response.items[0].statistics.viewCount)
+  }
+
+  static parseKeywords(response) {
+    let keywords = response.items[0].brandingSettings.channel.keywords
+    if (keywords) {
+      keywords = keywords.split(' ').slice(0, 2)
+      keywords.forEach((word, idx) => {
+        keywords[idx] = `#${keywords[idx]}`
+      })
+      keywords = keywords.join(' ')
+      return keywords.replace(/["]/g, '')
+    }
   }
 
   constructor(props) {
@@ -36,6 +57,7 @@ class SliderCard extends React.Component {
     this.state = {
       subs: null,
       views: null,
+      keywords: null,
     }
     this.onSearchResponse = this.onSearchResponse.bind(this)
   }
@@ -43,35 +65,34 @@ class SliderCard extends React.Component {
   componentWillMount() {
     const request = window.gapi.client.youtube.channels.list({
       id: this.props.data.id.channelId,
-      part: 'statistics',
+      part: 'statistics,brandingSettings',
     })
     request.execute(this.onSearchResponse)
   }
 
   onSearchResponse(response) {
-    console.log(response)
-    const subCount = SliderCard.addCommas(response.items[0].statistics.subscriberCount)
-    const viewCount = SliderCard.addCommas(response.items[0].statistics.viewCount)
     this.setState({
-      subs: subCount,
-      views: viewCount,
+      subs: YTListItem.getSubCount(response),
+      views: YTListItem.getViewCount(response),
+      keywords: YTListItem.parseKeywords(response),
     })
   }
 
   render() {
     const image = this.props.data.snippet.thumbnails.medium.url
+    const channelId = this.props.data.id.channelId
     let title = this.props.data.snippet.channelTitle
     title = title.length > 20 ? `${title.slice(0, 16)}...` : title
     return (
       <Card>
-        <Image src={image} />
+        <Link to={`/youtube/${channelId}`}><Image src={image} /></Link>
         <Title>{title}</Title>
         <Data>{this.state.subs} subscribers</Data>
         <Data>{this.state.views} views</Data>
-        <Data>Cosplay</Data>
+        <Data>{this.state.keywords}</Data>
       </Card>
     )
   }
 }
 
-export default SliderCard
+export default YTListItem

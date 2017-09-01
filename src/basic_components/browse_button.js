@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
 const BrowseButton = styled.button`
-  margin-top: 5%;
-  padding: 24px 32px;
+  margin-top: 7%;
+  padding: 1.8vw 2.7vw;
   background-color: #ff0000;
-  font-size: 32px;
+  font-size: 2vw;
   color: white;
   border-radius: 16px;
   border: 0;
@@ -16,7 +16,7 @@ const BrowseButton = styled.button`
   }
 
   @media (max-width: 1200px) {
-    padding: 16px 24px;
+    padding: 20px 28px;
     font-size: 24px;
   }
 `

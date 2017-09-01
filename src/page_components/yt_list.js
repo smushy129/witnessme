@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import SliderCard from './slider_card'
+import YTListItem from './yt_list_item'
 
 const Section = styled.section`
   display: flex;
@@ -33,7 +33,7 @@ const Ul = styled.ul`
 
 const categories = ['tech', 'art', 'gamer', 'guitar', 'make up', 'food']
 
-class Slider extends React.Component {
+class YTList extends React.Component {
   static shuffle(array) {
     let counter = array.length
 
@@ -72,7 +72,7 @@ class Slider extends React.Component {
   }
 
   onSearchResponse(response) {
-    const shuffled = Slider.shuffle(response.items).slice(0, 2)
+    const shuffled = YTList.shuffle(response.items).slice(0, 2)
     const newState = [].concat(this.state.youtubeList).concat(shuffled)
     this.setState({ youtubeList: newState })
   }
@@ -95,7 +95,7 @@ class Slider extends React.Component {
   render() {
     if (!this.state.youtubeList.length) return null
     const featuredList = this.state.youtubeList.map((item) => {
-      return <li key={item.id.channelId}><SliderCard data={item} /></li>
+      return <li key={item.id.channelId}><YTListItem data={item} /></li>
     })
     return (
       <Section>
@@ -108,4 +108,4 @@ class Slider extends React.Component {
   }
 }
 
-export default Slider
+export default YTList

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import SplashImage from '../page_components/splash_image'
 import YoutubeIcon from '../assets/images/youtube-icon.png'
-import Slider from '../page_components/slider'
+import YTList from '../page_components/yt_list'
 
 const Body = styled.div`
   margin: auto;
@@ -26,10 +26,10 @@ class Landing extends React.Component {
         <SplashImage />
         <Body>
           <SubHeader>Featured</SubHeader>
-          <Slider>
+          <YTList>
             <Link to="youtube"><Icon src={YoutubeIcon} alt="youtube-icon" /></Link>
             <span>YouTube</span>
-          </Slider>
+          </YTList>
         </Body>
       </div>
     )
