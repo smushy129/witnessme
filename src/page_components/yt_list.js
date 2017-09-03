@@ -84,7 +84,7 @@ class YTList extends React.Component {
       const request = window.gapi.client.youtube.search.list({
         part: 'snippet',
         type: 'channel',
-        maxResults: 10,
+        maxResults: 20,
         q: category,
       })
       request.execute(this.onSearchResponse)

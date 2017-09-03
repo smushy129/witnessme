@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import RecentVideosList from '../page_components/recent_videos_list'
 
 const Profile = styled.section`
   margin: auto;
@@ -12,19 +13,19 @@ const Profile = styled.section`
   text-align: center;
   background: #fafafa;
 `
-const Title = styled.h1`
-  font-size: 6vw;
+const Banner = styled.img`
+  object-fit: cover;
 `
-const Image = styled.img`
+const Avatar = styled.img`
   width: 30vw;
   height: 30vw;
   object-fit: cover;
-  margin: 0 3%;
+  margin-right: 3%;
 `
 const ImageStats = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 90%;
   font-size: 2vw;
   background: #FFF;
   margin: 3%;
@@ -47,17 +48,12 @@ const Stats = styled.div`
 const Description = styled.span`
   display: flex;
   flex-direction: column;
-  margin: auto 0;
   line-height: 2vw;
   font-size: 1.5vw;
-  width: 40%;
-  max-height: 30vw;
-  text-align: left;
-  overflow-y: scroll;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  text-align: center;
+  max-width: 90%;
+  background: #FFF;
+  margin-bottom: 3%;
 
   h2 {
     font-size: 2vw;
@@ -83,6 +79,21 @@ class InfluencerShow extends React.Component {
     return InfluencerShow.addCommas(response.items[0].statistics.videoCount)
   }
 
+  static padZero(num) {
+    if (Number(num) < 10) {
+      return `0${Number(num) + 1}`
+    }
+    return num
+  }
+
+  static parseDate(response) {
+    const date = new Date(response.items[0].snippet.publishedAt)
+    const year = InfluencerShow.padZero(date.getFullYear())
+    const month = InfluencerShow.padZero(date.getMonth())
+    const day = InfluencerShow.padZero(date.getDate())
+    return `${month}/${day}/${year}`
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -90,9 +101,11 @@ class InfluencerShow extends React.Component {
       description: null,
       subs: null,
       views: null,
+      publishedDate: null,
       recentVideos: null,
       videoCount: null,
       image: null,
+      banner: null,
     }
     this.onYouTubeApiLoad = this.onYouTubeApiLoad.bind(this)
     this.onSearchResponse = this.onSearchResponse.bind(this)
@@ -114,13 +127,16 @@ class InfluencerShow extends React.Component {
     const image = response.items[0].snippet.thumbnails.high.url
     const description = response.items[0].snippet.description
     const title = response.items[0].snippet.title
+    const banner = response.items[0].brandingSettings.image.bannerImageUrl
     this.setState({
       title: title,
       description: description,
       subs: InfluencerShow.getSubCount(response),
       views: InfluencerShow.getViewCount(response),
       videoCount: InfluencerShow.getVideoCount(response),
+      publishedDate: InfluencerShow.parseDate(response),
       recentVideos: null,
+      banner: banner,
       image: image,
     })
   }
@@ -129,31 +145,37 @@ class InfluencerShow extends React.Component {
     const channelId = this.props.match.params.id
     const request = window.gapi.client.youtube.channels.list({
       id: channelId,
-      part: 'snippet,statistics',
+      part: 'snippet,statistics,brandingSettings',
     })
     request.execute(this.onSearchResponse)
   }
 
   render() {
     if (!this.state.subs) return null
+    const channelId = this.props.match.params.id
     return (
       <Profile>
-        <Title>{this.state.title}</Title>
+        <Banner src={this.state.banner} />
         <ImageStats>
-          <Description>
-            <h2>Description</h2>
-            {this.state.description}
-          </Description>
-          <Image src={this.state.image} />
+          <Avatar src={this.state.image} />
           <Stats>
+            <h2>Channel Title</h2>
+            <p>{this.state.title}</p>
             <h2>Videos</h2>
             <p>{this.state.videoCount}</p>
             <h2>Views</h2>
             <p>{this.state.views}</p>
             <h2>Subscribers</h2>
             <p>{this.state.subs}</p>
+            <h2>Joined</h2>
+            <p>{this.state.publishedDate}</p>
           </Stats>
         </ImageStats>
+        <Description>
+          <h2>About</h2>
+          {this.state.description}
+        </Description>
+        <RecentVideosList channelId={channelId} />
       </Profile>
     )
   }
