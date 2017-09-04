@@ -1,8 +1,8 @@
 # Witness Me
 
-Witness Me is an application for marketers to find influencers on top social media platforms including YouTube, Instagram, and Twitter.
+Witness Me is an application for marketers to find influencers on YouTube.
 
 Main Technologies:
 - React.js
-- styled-components library for CSS in JS
+- Styled Components
 - YouTube API

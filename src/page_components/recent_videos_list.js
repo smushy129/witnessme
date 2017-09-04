@@ -8,6 +8,8 @@ const Section = styled.section`
   justify-content: center;
   align-items: center;
   max-width: 90%;
+  background: #FFF;
+  padding: 1%;
 
   h2 {
     font-size: 2vw;

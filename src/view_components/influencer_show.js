@@ -10,7 +10,6 @@ const Profile = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
   background: #fafafa;
 `
 const Banner = styled.img`
@@ -50,15 +49,17 @@ const Description = styled.span`
   flex-direction: column;
   line-height: 2vw;
   font-size: 1.5vw;
-  text-align: center;
   max-width: 90%;
   background: #FFF;
   margin-bottom: 3%;
+  padding: 1%;
+  text-align: justify;
 
   h2 {
     font-size: 2vw;
     color: #767676;
     line-height: 3vw;
+    text-align: center;
   }
 `
 
