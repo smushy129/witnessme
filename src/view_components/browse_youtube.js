@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import YouTubeCategory from '../page_components/youtube_category'
+// import YouTubeCategory from '../page_components/youtube_category'
+import Carousel from '../basic_components/carousel'
 
 const Section = styled.section`
   display: flex;
@@ -12,7 +13,6 @@ const Section = styled.section`
     font-size: 4vw;
   }
 `
-
 const categoryIds = {
   beauty: '/m/041xxh',
   fashion: '/m/032tl',
@@ -79,13 +79,14 @@ class BrowseYoutube extends React.Component {
 
   renderCategory(category) {
     const list = this.state[category]
-    const categoryList = list.map((categoryItem) => {
-      const channelId = categoryItem.id.channelId
-      return (
-        <li key={channelId}><YouTubeCategory categoryData={categoryItem} /></li>
-      )
-    })
-    return categoryList
+    // const categoryList = list.map((categoryItem) => {
+    //   const channelId = categoryItem.id.channelId
+    //   return (
+    //     <li key={channelId}><YouTubeCategory categoryData={categoryItem} /></li>
+    //   )
+    // })
+    // return categoryList
+    return <Carousel list={list} />
   }
 
 
@@ -95,21 +96,18 @@ class BrowseYoutube extends React.Component {
         !gaming || !pets || !travel || !tech || !vehicles) {
       return null
     }
-    debugger
     return (
       <Section>
         <h2>YouTube Categories</h2>
-        <ul>
-          {this.renderCategory('beauty')}
-          {this.renderCategory('fashion')}
-          {this.renderCategory('fitness')}
-          {this.renderCategory('food')}
-          {this.renderCategory('gaming')}
-          {this.renderCategory('pets')}
-          {this.renderCategory('travel')}
-          {this.renderCategory('tech')}
-          {this.renderCategory('vehicles')}
-        </ul>
+        {this.renderCategory('beauty')}
+        {this.renderCategory('fashion')}
+        {this.renderCategory('fitness')}
+        {this.renderCategory('food')}
+        {this.renderCategory('gaming')}
+        {this.renderCategory('pets')}
+        {this.renderCategory('travel')}
+        {this.renderCategory('tech')}
+        {this.renderCategory('vehicles')}
       </Section>
     )
   }
