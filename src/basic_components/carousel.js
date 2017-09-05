@@ -1,22 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import scrollTo from '../helpers/scrollAnimation'
 
+const Section = styled.section`
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: 90%;
+`
 const Title = styled.h3`
-  font-size: 2vw;
+  font-size: 1.3vw;
 `
 const Image = styled.img`
-  width: 20vw;
-  height: 20vw;
+  width: 17.9vw;
+  height: 17.9vw;
   object-fit: cover;
 `
 const CategoryUl = styled.ul`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
 
   li {
-    margin: 3%;
+    display: inline-block;
+    margin: 2%;
   }
 `
 const Button = styled.button`
@@ -41,7 +48,28 @@ class Carousel extends React.Component {
     this.state = {
       state: null,
     }
+    this.carouselComponent = null
+    this.pos = 0
     this.renderSlides = this.renderSlides.bind(this)
+    this.handleLeft = this.handleLeft.bind(this)
+    this.handleRight = this.handleRight.bind(this)
+  }
+
+  componentDidMount() {
+    this.carouselComponent = this.carouselViewPort
+    this.width = document.getElementById('categoryUl').offsetWidth
+  }
+
+  handleLeft() {
+    if (this.pos > 0) {
+      this.pos -= this.width
+      scrollTo(this.carouselComponent, this.pos, 300)
+    }
+  }
+
+  handleRight() {
+    this.pos += this.width
+    scrollTo(this.carouselComponent, this.pos, 300)
   }
 
   renderSlides() {
@@ -63,11 +91,14 @@ class Carousel extends React.Component {
 
   render() {
     return (
-      <CategoryUl>
-        <Button>{`<`}</Button>
-        {this.renderSlides()}
-        <Button>{`>`}</Button>
-      </CategoryUl>
+      <Section>
+        <Button onClick={this.handleLeft}>{`<`}</Button>
+        <CategoryUl id="categoryUl" innerRef={(c) => { this.carouselViewPort = c }}>
+          {this.renderSlides()}
+        </CategoryUl>
+        &nbsp; &nbsp; &nbsp;
+        <Button onClick={this.handleRight}>{`>`}</Button>
+      </Section>
     )
   }
 }

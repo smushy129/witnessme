@@ -7,14 +7,12 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3%;
 
   h2 {
     font-size: 4vw;
   }
 `
 const categoryIds = {
-  beauty: '/m/041xxh',
   fashion: '/m/032tl',
   fitness: '/m/027x7n',
   food: '/m/02wbm',
@@ -30,7 +28,6 @@ class BrowseYoutube extends React.Component {
     super(props)
 
     this.state = {
-      beauty: null,
       fashion: null,
       fitness: null,
       food: null,
@@ -67,10 +64,10 @@ class BrowseYoutube extends React.Component {
       if (categoryIds.hasOwnProperty(category)) {
         const request = window.gapi.client.youtube.search.list({
           part: 'snippet',
-          maxResults: 3,
-          order: 'viewCount',
+          maxResults: 30,
           type: 'channel',
           topicId: categoryIds[category],
+          order: 'viewCount',
         })
         request.execute((response) => this.onSearchResponse(response, category))
       }
@@ -79,27 +76,19 @@ class BrowseYoutube extends React.Component {
 
   renderCategory(category) {
     const list = this.state[category]
-    // const categoryList = list.map((categoryItem) => {
-    //   const channelId = categoryItem.id.channelId
-    //   return (
-    //     <li key={channelId}><YouTubeCategory categoryData={categoryItem} /></li>
-    //   )
-    // })
-    // return categoryList
     return <Carousel list={list} />
   }
 
 
   render() {
-    const { beauty, fashion, fitness, food, gaming, pets, travel, tech, vehicles } = this.state
-    if (!beauty || !fashion || !fitness || !food ||
+    const { fashion, fitness, food, gaming, pets, travel, tech, vehicles } = this.state
+    if (!fashion || !fitness || !food ||
         !gaming || !pets || !travel || !tech || !vehicles) {
       return null
     }
     return (
       <Section>
         <h2>YouTube Categories</h2>
-        {this.renderCategory('beauty')}
         {this.renderCategory('fashion')}
         {this.renderCategory('fitness')}
         {this.renderCategory('food')}

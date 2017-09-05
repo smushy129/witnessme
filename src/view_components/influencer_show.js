@@ -47,9 +47,10 @@ const Stats = styled.div`
 const Description = styled.span`
   display: flex;
   flex-direction: column;
+  align-items: center;
   line-height: 2vw;
   font-size: 1.5vw;
-  max-width: 90%;
+  width: 90%;
   background: #FFF;
   margin-bottom: 3%;
   padding: 1%;
