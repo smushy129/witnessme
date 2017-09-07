@@ -7,23 +7,30 @@ const Section = styled.section`
   display: flex;
   align-items: center;
   margin: auto;
-  width: 90%;
+  width: 90vw;
 `
 const Title = styled.h3`
-  font-size: 1.3vw;
+  font-size: 1.5vw;
 `
 const Image = styled.img`
-  width: 17.9vw;
-  height: 17.9vw;
+  width: 20vw;
+  height: 20vw;
   object-fit: cover;
 `
 const CategoryUl = styled.ul`
   white-space: nowrap;
   overflow: hidden;
+  width: 84vw;
+
+  li:last-child {
+    margin-right: 0;
+  }
 
   li {
     display: inline-block;
-    margin: 2%;
+    margin-top: 1vw;
+    margin-right: 1vw;
+    margin-bottom: 1vw;
   }
 `
 const Button = styled.button`
@@ -68,8 +75,10 @@ class Carousel extends React.Component {
   }
 
   handleRight() {
-    this.pos += this.width
-    scrollTo(this.carouselComponent, this.pos, 300)
+    if (this.pos <= this.width * 6) {
+      this.pos += this.width
+      scrollTo(this.carouselComponent, this.pos, 300)
+    }
   }
 
   renderSlides() {
@@ -96,7 +105,7 @@ class Carousel extends React.Component {
         <CategoryUl id="categoryUl" innerRef={(c) => { this.carouselViewPort = c }}>
           {this.renderSlides()}
         </CategoryUl>
-        &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp;
         <Button onClick={this.handleRight}>{`>`}</Button>
       </Section>
     )

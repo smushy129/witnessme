@@ -64,7 +64,7 @@ class BrowseYoutube extends React.Component {
       if (categoryIds.hasOwnProperty(category)) {
         const request = window.gapi.client.youtube.search.list({
           part: 'snippet',
-          maxResults: 30,
+          maxResults: 32,
           type: 'channel',
           topicId: categoryIds[category],
           order: 'viewCount',
