@@ -17,9 +17,7 @@ const CategoryUl = styled.ul`
 
   li {
     display: inline-block;
-    margin-top: 1vw;
-    margin-right: 1vw;
-    margin-bottom: 1vw;
+    margin: 0.5vw;
   }
 `
 const Button = styled.button`

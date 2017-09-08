@@ -8,6 +8,7 @@ const Section = styled.section`
   align-items: center;
 
   h2 {
+    margin: 2%;
     font-size: 4vw;
   }
 `
