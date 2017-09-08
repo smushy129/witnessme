@@ -82,10 +82,11 @@ class InfluencerShow extends React.Component {
   }
 
   static padZero(num) {
-    if (Number(num) < 10) {
-      return `0${Number(num) + 1}`
+    const month = Number(num) + 1
+    if (month < 10) {
+      return `0${month}`
     }
-    return num
+    return `${month}`
   }
 
   static parseDate(response) {

@@ -9,7 +9,6 @@ const Body = styled.div`
   margin: auto;
   width: 90%;
 `
-
 const SubHeader = styled.h2`
   font-size: 3rem;
   text-align: center;

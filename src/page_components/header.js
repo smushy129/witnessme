@@ -1,19 +1,27 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import Input from '../basic_components/input'
-import Button from '../basic_components/button'
 import Logo from '../basic_components/logo'
 
 const Head = styled.header`
   margin: auto;
   width: 95%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 
   input {
-    margin-right: 10%;
+    background-color: #f5f8fa;
+    border-radius: 21px;
+    border: 1px solid #e6ecf0;
+    box-sizing: border-box;
+    color: #14171a;
+    display: block;
+    font-size: 12px;
+    height: 32px;
+    line-height: 16px;
+    padding: 8px 32px 8px 12px;
   }
 
   @media (max-width: 750px) {
@@ -35,19 +43,46 @@ const Head = styled.header`
 `
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      username: '',
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  componentDidMount() {
+    this.searchBarComponent = this.searchBar
+  }
+
+  handleChange(e) {
+    this.setState({ username: e.currentTarget.value })
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    this.props.history.push(`/youtube/search/${this.state.username}`)
+    this.setState({ username: '' })
+    this.searchBarComponent.value = ''
+    this.searchBarComponent.blur()
+  }
+
   render() {
     return (
       <Head>
         <Link to="/">{<Logo />}</Link>
-        <Input placeholder="Search" />
-        <div>
-          <Button><span>Login</span></Button>
-          &nbsp; &nbsp;
-          <Button><span>Register</span></Button>
-        </div>
+        <form onSubmit={this.handleSubmit}>
+          <Input
+            placeholder="Search"
+            onChange={this.handleChange}
+            innerRef={(c) => { this.searchBar = c }}
+          />
+        </form>
       </Head>
     )
   }
 }
 
-export default Header
+export default withRouter(Header)

@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
-const BrowseButton = styled.button`
-  margin-top: 7%;
+const BrowseButton = styled.div`
   padding: 1.8vw 2.7vw;
   background-color: #ff0000;
   font-size: 2vw;

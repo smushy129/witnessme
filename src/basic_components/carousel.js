@@ -1,30 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import scrollTo from '../helpers/scrollAnimation'
+import YoutubeCategory from '../page_components/youtube_category'
 
 const Section = styled.section`
   display: flex;
+  justify-content: space-around;
   align-items: center;
   margin: auto;
   width: 90vw;
-`
-const Title = styled.h3`
-  font-size: 1.5vw;
-`
-const Image = styled.img`
-  width: 20vw;
-  height: 20vw;
-  object-fit: cover;
 `
 const CategoryUl = styled.ul`
   white-space: nowrap;
   overflow: hidden;
   width: 84vw;
-
-  li:last-child {
-    margin-right: 0;
-  }
 
   li {
     display: inline-block;
@@ -52,9 +41,6 @@ class Carousel extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      state: null,
-    }
     this.carouselComponent = null
     this.pos = 0
     this.renderSlides = this.renderSlides.bind(this)
@@ -84,16 +70,8 @@ class Carousel extends React.Component {
   renderSlides() {
     const { list } = this.props
     const categoryList = list.map((categoryItem) => {
-      const image = categoryItem.snippet.thumbnails.medium.url
       const channelId = categoryItem.id.channelId
-      let title = categoryItem.snippet.channelTitle
-      title = title.length > 20 ? `${title.slice(0, 16)}...` : title
-      return (
-        <li key={channelId}>
-          <Link to={`/youtube/${channelId}`}><Image src={image} /></Link>
-          <Title>{title}</Title>
-        </li>
-      )
+      return <YoutubeCategory categoryData={categoryItem} key={channelId} />
     })
     return categoryList
   }
@@ -101,12 +79,11 @@ class Carousel extends React.Component {
   render() {
     return (
       <Section>
-        <Button onClick={this.handleLeft}>{`<`}</Button>
+        <Button onClick={this.handleLeft}>{'<'}</Button>
         <CategoryUl id="categoryUl" innerRef={(c) => { this.carouselViewPort = c }}>
           {this.renderSlides()}
         </CategoryUl>
-        &nbsp; &nbsp;
-        <Button onClick={this.handleRight}>{`>`}</Button>
+        <Button onClick={this.handleRight}>{'>'}</Button>
       </Section>
     )
   }

@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-// import YouTubeCategory from '../page_components/youtube_category'
 import Carousel from '../basic_components/carousel'
 
 const Section = styled.section`
@@ -11,6 +10,14 @@ const Section = styled.section`
   h2 {
     font-size: 4vw;
   }
+`
+const CategoryTitle = styled.h3`
+  diplay: flex;
+  align-self: center;
+  margin-top: 3%;
+  font-size: 2vw;
+  width: 85vw;
+  color: #767676;
 `
 const categoryIds = {
   fashion: '/m/032tl',
@@ -79,7 +86,6 @@ class BrowseYoutube extends React.Component {
     return <Carousel list={list} />
   }
 
-
   render() {
     const { fashion, fitness, food, gaming, pets, travel, tech, vehicles } = this.state
     if (!fashion || !fitness || !food ||
@@ -89,13 +95,21 @@ class BrowseYoutube extends React.Component {
     return (
       <Section>
         <h2>YouTube Categories</h2>
+        <CategoryTitle>Fashion</CategoryTitle>
         {this.renderCategory('fashion')}
+        <CategoryTitle>Fitness</CategoryTitle>
         {this.renderCategory('fitness')}
+        <CategoryTitle>Food</CategoryTitle>
         {this.renderCategory('food')}
+        <CategoryTitle>Gaming</CategoryTitle>
         {this.renderCategory('gaming')}
+        <CategoryTitle>Pets</CategoryTitle>
         {this.renderCategory('pets')}
+        <CategoryTitle>Travel</CategoryTitle>
         {this.renderCategory('travel')}
+        <CategoryTitle>Tech</CategoryTitle>
         {this.renderCategory('tech')}
+        <CategoryTitle>Vehicles</CategoryTitle>
         {this.renderCategory('vehicles')}
       </Section>
     )
