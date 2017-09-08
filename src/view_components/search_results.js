@@ -1,13 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 import SearchResultItem from '../page_components/search_result_item'
+import Spinner from '../assets/images/spinner.svg'
 
 const Results = styled.ul`
   font-size: 2vw;
   display: flex;
   flex-direction: column;
-  margin-left: 40%;
+  margin-left: 30%;
   padding: 3%;
+`
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 class SearchResults extends React.Component {
@@ -61,10 +67,10 @@ class SearchResults extends React.Component {
 
   render() {
     if (!this.state.results) {
-      return <h1>Loading</h1>
+      return <Loading><img src={Spinner} alt="loading-spinner" /></Loading>
     }
     if (!this.state.results.length) {
-      return <h1>No such user found</h1>
+      return <h1>No results found</h1>
     }
     return (
       <Results>
