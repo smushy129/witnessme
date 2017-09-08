@@ -35,6 +35,13 @@ class SearchResults extends React.Component {
     })
   }
 
+  componentWillUpdate(nextProps) {
+    const query = nextProps.match.params.username
+    if (this.props.match.params.username !== query) {
+      this.search(query)
+    }
+  }
+
   onYouTubeApiLoad() {
     window.gapi.client.setApiKey('AIzaSyCYNzEeEAbgeKH3nt7ZeHVMBn9Ej-gl4Ko')
     this.search()
@@ -46,8 +53,10 @@ class SearchResults extends React.Component {
     })
   }
 
-  search() {
-    const query = this.props.match.params.username
+  search(query) {
+    if (typeof query === 'undefined') {
+      query = this.props.match.params.username
+    }
     const request = window.gapi.client.youtube.search.list({
       part: 'snippet',
       type: 'channel',

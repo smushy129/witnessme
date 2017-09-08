@@ -20,7 +20,6 @@ const Body = styled.section`
     text-decoration: none;
   }
 `
-
 const Title = styled.div`
   text-align: center;
   font-size 70px;

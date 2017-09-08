@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import YTListItem from './yt_list_item'
+import Spinner from '../assets/images/spinner.svg'
 
 const Section = styled.section`
   display: flex;
@@ -29,6 +30,11 @@ const Ul = styled.ul`
   li {
     margin: 2%;
   }
+`
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const categories = ['tech', 'art', 'gamer', 'guitar', 'make up', 'food']
@@ -93,7 +99,9 @@ class YTList extends React.Component {
   }
 
   render() {
-    if (!this.state.youtubeList.length) return null
+    if (!this.state.youtubeList.length) {
+      return <Loading><img src={Spinner} alt="loading-spinner" /></Loading>
+    }
     const featuredList = this.state.youtubeList.map((item) => {
       return <li key={item.id.channelId}><YTListItem data={item} /></li>
     })

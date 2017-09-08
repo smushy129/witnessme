@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Switch, Route, HashRouter } from 'react-router-dom'
 import Header from './page_components/header'
+import Footer from './page_components/footer'
 import Landing from './view_components/landing'
 import InfluencerShow from './view_components/influencer_show'
 import BrowseYoutube from './view_components/browse_youtube'
@@ -18,6 +19,7 @@ class App extends Component {
             <Route exact path="/youtube/:id" component={InfluencerShow} />
             <Route exacth path="/youtube/search/:username" component={SearchResults} />
           </Switch>
+          <Footer />
         </div>
       </HashRouter>
     )

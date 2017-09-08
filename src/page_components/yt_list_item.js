@@ -50,6 +50,7 @@ class YTListItem extends React.Component {
       keywords = keywords.join(' ')
       return keywords.replace(/["]/g, '')
     }
+    return '#youtuber'
   }
 
   constructor(props) {

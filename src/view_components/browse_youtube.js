@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Carousel from '../basic_components/carousel'
+import Spinner from '../assets/images/spinner.svg'
 
 const Section = styled.section`
   display: flex;
@@ -19,6 +20,11 @@ const CategoryTitle = styled.h3`
   font-size: 2vw;
   width: 85vw;
   color: #767676;
+`
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 const categoryIds = {
   fashion: '/m/032tl',
@@ -91,7 +97,7 @@ class BrowseYoutube extends React.Component {
     const { fashion, fitness, food, gaming, pets, travel, tech, vehicles } = this.state
     if (!fashion || !fitness || !food ||
         !gaming || !pets || !travel || !tech || !vehicles) {
-      return null
+      return <Loading><img src={Spinner} alt="loading-spinner" /></Loading>
     }
     return (
       <Section>

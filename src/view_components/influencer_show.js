@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import RecentVideosList from '../page_components/recent_videos_list'
+import * as HelperUtil from '../helpers/helper_util'
+import Spinner from '../assets/images/spinner.svg'
 
 const Profile = styled.section`
   margin: auto;
@@ -14,6 +16,9 @@ const Profile = styled.section`
 `
 const Banner = styled.img`
   object-fit: cover;
+  background: #767676;
+  height: 15vw;
+  width: 90vw;
 `
 const Avatar = styled.img`
   width: 30vw;
@@ -63,40 +68,13 @@ const Description = styled.span`
     text-align: center;
   }
 `
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 class InfluencerShow extends React.Component {
-  static addCommas(num) {
-    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-  }
-
-  static getSubCount(response) {
-    return InfluencerShow.addCommas(response.items[0].statistics.subscriberCount)
-  }
-
-  static getViewCount(response) {
-    return InfluencerShow.addCommas(response.items[0].statistics.viewCount)
-  }
-
-  static getVideoCount(response) {
-    return InfluencerShow.addCommas(response.items[0].statistics.videoCount)
-  }
-
-  static padZero(num) {
-    const month = Number(num) + 1
-    if (month < 10) {
-      return `0${month}`
-    }
-    return `${month}`
-  }
-
-  static parseDate(response) {
-    const date = new Date(response.items[0].snippet.publishedAt)
-    const year = InfluencerShow.padZero(date.getFullYear())
-    const month = InfluencerShow.padZero(date.getMonth())
-    const day = InfluencerShow.padZero(date.getDate())
-    return `${month}/${day}/${year}`
-  }
-
   constructor(props) {
     super(props)
     this.state = {
@@ -128,16 +106,16 @@ class InfluencerShow extends React.Component {
 
   onSearchResponse(response) {
     const image = response.items[0].snippet.thumbnails.high.url
-    const description = response.items[0].snippet.description
+    const description = response.items[0].snippet.description === '' ? 'Nothing here :(' : response.items[0].snippet.description
     const title = response.items[0].snippet.title
     const banner = response.items[0].brandingSettings.image.bannerImageUrl
     this.setState({
       title: title,
       description: description,
-      subs: InfluencerShow.getSubCount(response),
-      views: InfluencerShow.getViewCount(response),
-      videoCount: InfluencerShow.getVideoCount(response),
-      publishedDate: InfluencerShow.parseDate(response),
+      subs: HelperUtil.getSubCount(response),
+      views: HelperUtil.getViewCount(response),
+      videoCount: HelperUtil.getVideoCount(response),
+      publishedDate: HelperUtil.parseDate(response),
       recentVideos: null,
       banner: banner,
       image: image,
@@ -154,7 +132,7 @@ class InfluencerShow extends React.Component {
   }
 
   render() {
-    if (!this.state.subs) return null
+    if (!this.state.subs) return <Loading><img src={Spinner} alt="loading-spinner" /></Loading>
     const channelId = this.props.match.params.id
     return (
       <Profile>
