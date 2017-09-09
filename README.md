@@ -12,7 +12,7 @@ If a user does not know what to search for, they can browse top influencers for 
 ### Detailed YouTube Influencer Page
 Users can find relevant information about any influencer on this page. The information on this page allows
 the user to make a decision on whether or not the youtube influencer is right one for marketing goals.
-![Detailed Page](https://github.com/kingsleyliao/witnessme/blob/master/src/assets/images/LandingPage.png)
+![Detailed Page](https://github.com/kingsleyliao/witnessme/blob/master/src/assets/images/UserDetail.png)
 
 ### Search by Keywords
 Witness me supports searching for channels by keywords.
