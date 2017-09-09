@@ -10,7 +10,7 @@ const Body = styled.div`
   width: 90%;
 `
 const SubHeader = styled.h2`
-  font-size: 3rem;
+  font-size: 4vw;
   text-align: center;
 `
 const Icon = styled.img`

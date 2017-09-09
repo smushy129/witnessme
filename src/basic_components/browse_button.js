@@ -18,5 +18,10 @@ const BrowseButton = styled.div`
     padding: 20px 28px;
     font-size: 24px;
   }
+
+  @media (max-width: 667px) {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
 `
 export default BrowseButton

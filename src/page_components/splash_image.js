@@ -7,16 +7,15 @@ const Body = styled.section`
   margin-bottom: 3%;
   width: 100%;
   height: 36vw;
-  min-height: 500px;
+  min-height: 200px;
   color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
 
   a {
-    margin-top: 5%;
     text-decoration: none;
   }
 `

@@ -25,12 +25,6 @@ const Head = styled.header`
   }
 
   @media (max-width: 750px) {
-    input {
-      display: none;
-    }
-  }
-
-  @media (max-width: 500px) {
     a {
       width: 200px
     }
@@ -38,6 +32,19 @@ const Head = styled.header`
     img {
       width: 75%;
       height: 75%;
+    }
+
+    input {
+      background-color: #f5f8fa;
+      border-radius: 21px;
+      border: 1px solid #e6ecf0;
+      box-sizing: border-box;
+      color: #14171a;
+      display: block;
+      font-size: 8px;
+      height: 20px;
+      line-height: 8px;
+      padding: 8px 0;
     }
   }
 `
